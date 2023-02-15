@@ -1,0 +1,416 @@
+@prefix ex:             <http://example.org/sensors/>.
+@prefix  owl:            <http://www.w3.org/2002/07/owl#>.
+@prefix  rdf:            <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix  xml:            <http://www.w3.org/XML/1998/namespace>.
+@prefix  xsd:            <http://www.w3.org/2001/XMLSchema#>.
+@prefix  foaf:           <http://xmlns.com/foaf/0.1/>.
+@prefix  obda:           <https://w3id.org/obda/vocabulary#>.
+@prefix  rdfs:           <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix  ssn:            <http://www.w3.org/ns/ssn/>.
+@prefix  sosa:           <http://www.w3.org/ns/sosa/>.
+@prefix  dash:           <http://dynamicdashboard.ilabt.imec.be/broker/ontologies/dashboard#>.
+@prefix  sensors:        <https://obelisk.ilabt.imec.be/api/v2/sensors/>.
+@prefix  obelisk:        <https://obelisk.ilabt.imec.be/ontology/>.
+@prefix  lbd:            <https://www.ugent.be/igentprojectLBD#>.
+@prefix  metric:         <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.igent/things/>.
+@prefix  dashmetric:      <http://dynamicdashboard.ilabt.imec.be/broker/ontologies/metrics#>.
+sensors:octa.2339117028558458888 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_Kitchen;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339117028558458888/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339117028558458888/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339117028558458888/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Kitchen"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2339117028558458888"; obelisk:friendlyName "Kitchen".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339117028558458888/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339117028558458888/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339117028558458888/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_Kitchen  <https://w3id.org/props#reference_simple> "Kitchen"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.Kitchen"; a <https://w3id.org/bot#Space>.
+sensors:octa.2339401793311821844 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_Hallway;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339401793311821844/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339401793311821844/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339401793311821844/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Hallway downstairs"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2339401793311821844"; obelisk:friendlyName "Hallway downstairs".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339401793311821844/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339401793311821844/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339401793311821844/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_Hallway  <https://w3id.org/props#reference_simple> "Hallway downstairs"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.Hallway"; a <https://w3id.org/bot#Space>.
+sensors:octa.2330394641301721108 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_Hallway1;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330394641301721108/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330394641301721108/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330394641301721108/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Hallway upstairs between meeting rooms"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2330394641301721108"; obelisk:friendlyName "Hallway upstairs between meeting rooms".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330394641301721108/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330394641301721108/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330394641301721108/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_Hallway1  <https://w3id.org/props#reference_simple> "Hallway upstairs between meeting rooms"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.Hallway1"; a <https://w3id.org/bot#Space>.
+sensors:octa.2330391222676049928 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_Hallway2;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330391222676049928/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330391222676049928/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330391222676049928/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Hallway upstairs near bathroom"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2330391222676049928"; obelisk:friendlyName "Hallway upstairs near bathroom".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330391222676049928/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330391222676049928/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330391222676049928/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_Hallway2  <https://w3id.org/props#reference_simple> "Hallway upstairs near bathroom"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.Hallway2"; a <https://w3id.org/bot#Space>.
+sensors:octa.2330113097605533710 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_Living;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330113097605533710/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330113097605533710/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330113097605533710/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Living room near glass door"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2330113097605533710"; obelisk:friendlyName "Living room near glass door".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330113097605533710/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330113097605533710/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2330113097605533710/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_Living  <https://w3id.org/props#reference_simple> "Living room near glass door"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.Living"; a <https://w3id.org/bot#Space>.
+sensors:octa.2333768815022395400 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_CareRoom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2333768815022395400/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2333768815022395400/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2333768815022395400/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Care room"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2333768815022395400"; obelisk:friendlyName "Care room".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2333768815022395400/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2333768815022395400/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2333768815022395400/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_CareRoom  <https://w3id.org/props#reference_simple> "Care room"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.CareRoom"; a <https://w3id.org/bot#Space>.
+sensors:octa.2335739221463748616 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_BathRoomCareRoom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739221463748616/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739221463748616/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739221463748616/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Bathroom care room"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2335739221463748616"; obelisk:friendlyName "Bathroom care room".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739221463748616/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739221463748616/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739221463748616/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_BathRoomCareRoom  <https://w3id.org/props#reference_simple> "Bathroom care room"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.BathRoomCareRoom"; a <https://w3id.org/bot#Space>.
+sensors:octa.2337146557692596232 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_Office;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2337146557692596232/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2337146557692596232/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2337146557692596232/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Office Room downstairs"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2337146557692596232"; obelisk:friendlyName "Office Room downstairs".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2337146557692596232/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2337146557692596232/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2337146557692596232/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_Office  <https://w3id.org/props#reference_simple> "Office Room downstairs"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.Office"; a <https://w3id.org/bot#Space>.
+sensors:octa.2336020872534118408 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_Toilet;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336020872534118408/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336020872534118408/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336020872534118408/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Toilet downstairs"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2336020872534118408"; obelisk:friendlyName "Toilet downstairs".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336020872534118408/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336020872534118408/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336020872534118408/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_Toilet  <https://w3id.org/props#reference_simple> "Toilet downstairs"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.Toilet"; a <https://w3id.org/bot#Space>.
+sensors:octa.2334331966839279624 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_0_Storage;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334331966839279624/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334331966839279624/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334331966839279624/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Storage room"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2334331966839279624"; obelisk:friendlyName "Storage room".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334331966839279624/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334331966839279624/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334331966839279624/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_0_Storage  <https://w3id.org/props#reference_simple> "Storage room"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "0.Storage"; a <https://w3id.org/bot#Space>.
+sensors:octa.2339680012871618568 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_LargeMeetingRoom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339680012871618568/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339680012871618568/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339680012871618568/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Large meeting room"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2339680012871618568"; obelisk:friendlyName "Large meeting room".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339680012871618568/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339680012871618568/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2339680012871618568/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_LargeMeetingRoom  <https://w3id.org/props#reference_simple> "Large meeting room"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.LargeMeetingRoom"; a <https://w3id.org/bot#Space>.
+sensors:octa.2334053768754319380 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_SmallMeetingRoom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334053768754319380/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334053768754319380/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334053768754319380/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Small meeting room upstairs"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2334053768754319380"; obelisk:friendlyName "Small meeting room upstairs".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334053768754319380/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334053768754319380/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2334053768754319380/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_SmallMeetingRoom  <https://w3id.org/props#reference_simple> "Small meeting room upstairs"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.SmallMeetingRoom"; a <https://w3id.org/bot#Space>.
+sensors:octa.2336583569084469256 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_Toilet;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336583569084469256/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336583569084469256/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336583569084469256/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Toilet upstairs"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2336583569084469256"; obelisk:friendlyName "Toilet upstairs".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336583569084469256/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336583569084469256/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2336583569084469256/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_Toilet  <https://w3id.org/props#reference_simple> "Toilet upstairs"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.Toilet"; a <https://w3id.org/bot#Space>.
+sensors:octa.2338553902511378440 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_Bathroom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2338553902511378440/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2338553902511378440/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2338553902511378440/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Bathroom upstairs"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2338553902511378440"; obelisk:friendlyName "Bathroom upstairs".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2338553902511378440/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2338553902511378440/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2338553902511378440/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_Bathroom  <https://w3id.org/props#reference_simple> "Bathroom upstairs"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.Bathroom"; a <https://w3id.org/bot#Space>.
+sensors:octa.2335739268708388872 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_ChildBedRoom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739268708388872/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739268708388872/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739268708388872/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Child bedroom"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2335739268708388872"; obelisk:friendlyName "Child bedroom".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739268708388872/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739268708388872/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2335739268708388872/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_ChildBedRoom  <https://w3id.org/props#reference_simple> "Child bedroom"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.ChildBedRoom"; a <https://w3id.org/bot#Space>.
+sensors:octa.2342776164600991752 a sosa:Sensor;
+	obelisk:hasLocation lbd:space_1_MasterBedRoom;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2342776164600991752/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2342776164600991752/metrics/org.dyamand.types.common.Temperature%3A%3Anumber>;
+	sosa:observes <https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2342776164600991752/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber>;
+	rdfs:label "Master bedroom"; obelisk:scopeId "idlab.homelab"; obelisk:thingId "octa.2342776164600991752"; obelisk:friendlyName "Master bedroom".
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2342776164600991752/metrics/org.dyamand.types.airquality.CO2%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:CO2AirQuality;
+	rdfs:label "Air quality in terms of CO2" ;
+	dash:produces dashmetric:co2Airquality ;
+	obelisk:metricId "org.dyamand.types.airquality.CO2::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2342776164600991752/metrics/org.dyamand.types.common.Temperature%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:Temperature;
+	rdfs:label "Temperature (degr. C)" ;
+	dash:produces dashmetric:celsiusTemperature ;
+	obelisk:metricId "org.dyamand.types.common.Temperature::number" ;
+	obelisk:scopeId "idlab.homelab" .
+<https://obelisk.ilabt.imec.be/api/v2/scopes/idlab.homelab/things/octa.2342776164600991752/metrics/org.dyamand.types.common.RelativeHumidity%3A%3Anumber> a sosa:ObservableProperty ;
+	a obelisk:RelativeHumidity;
+	rdfs:label "Relative Humidity" ;
+	dash:produces dashmetric:relativeHumidity ;
+	obelisk:metricId "org.dyamand.types.common.RelativeHumidity::number" ;
+	obelisk:scopeId "idlab.homelab" .
+lbd:space_1_MasterBedRoom  <https://w3id.org/props#reference_simple> "Master bedroom"; <https://w3id.org/props#nameIfcRoot_attribute_simple> "1.MasterBedRoom"; a <https://w3id.org/bot#Space>.
