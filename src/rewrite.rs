@@ -87,29 +87,35 @@ pub fn rewrite_query(triple_index: &TripleIndex, query: &[Triple]) -> Vec<Triple
 }
 /// Rewrites rules, starting from a certain rule head using backward chaining
 pub fn rewrite_rules(triple_index: &TripleIndex, rule_index: &RuleIndex, rule_head: &Triple, orig_position: Option<usize>, rewritten_rules: &mut Vec<Rule>) -> Binding {
+
     let sub_rules: Vec<(Rc<Rule>, Vec<(usize, usize)>)> = BackwardChainer::find_subrules(rule_index, rule_head);
+
     let mut all_bindings = Binding::new();
     for (sub_rule, var_subs) in sub_rules.into_iter() {
-
         let mut rule_bindings = Binding::new();
         for (i,rule_atom) in sub_rule.body.iter().enumerate() {
             let mut rule_atom = rule_atom.clone();
             rule_atom.g = Some(VarOrTerm::new_var(format!("?graph_name_{}", i)));
 
             if let Some(mut result_bindings) = triple_index.query(&rule_atom, None) {
+                // println!("Joing left: {:?}", rule_bindings.decode());
+                // println!("Joing right: {:?}", result_bindings.decode());
                 //remove blank nodes from bindings
-                rule_bindings = rule_bindings.join(&result_bindings);
+                rule_bindings = rule_bindings.join_with_blank_override(&result_bindings, true);
+                // println!("Joing result: {:?}", rule_bindings.decode());
+
             }
             //recursive call
             let recursive_bindings = rewrite_rules(triple_index, rule_index, &rule_atom,  Some(i), rewritten_rules);
             rule_bindings.combine(recursive_bindings);
 
-            println!("Bindings {:?}", rule_bindings.decode());
 
         }
 
 
+
         let (bindings_mapping, mut rewritten_rules_temp) = rewrite_rule(sub_rule, &mut rule_bindings);
+
         rewritten_rules.append(&mut rewritten_rules_temp);
         //rename variables
         let mut renamed = rule_bindings.rename(var_subs.clone());
@@ -133,7 +139,6 @@ pub fn rewrite_rules(triple_index: &TripleIndex, rule_index: &RuleIndex, rule_he
 fn rewrite_body(sub_rule: &[Triple], rule_bindings: &mut Binding) -> (HashMap<usize, bool>,Vec<Triple>) {
 //check if head bindings are static or streaming
     let mut bindings_mapping = HashMap::new();
-    println!("Subrule: {:?}", TripleStore::decode_triples(sub_rule));
     for (i, triple) in sub_rule.iter().enumerate() {
         let triple_graph = Encoder::add(format!("?graph_name_{}", i));
         let vars = get_vars(&triple);
@@ -178,8 +183,7 @@ fn rewrite_body(sub_rule: &[Triple], rule_bindings: &mut Binding) -> (HashMap<us
         bindings_static = rule_bindings.clone();
     }
     let mut rewrite_body = Vec::new();
-    println!("Static bindings {:?}", bindings_static.decode());
-    println!("rule bindings {:?}", rule_bindings.decode());
+
 
     let bindings_static = remove_blink_nodes_from_binding(&bindings_static);
     for triple in new_body.iter() {
@@ -381,23 +385,13 @@ _:b0 <http://www.w3.org/ns/sosa/observedProperty> _:b3 <http://stream/>.
     }
 
     #[test]
-    fn test_rewrite_with_reasoning_hierarchy(){
+    fn test_rewrite_with_reasoning_single_hierarchy(){
         // generate static data
         let num_offices: usize = 1;
         let properties = ["CO2", "Humidity", "Loudness", "Temperature"];
 
         let static_triples = generate_building(num_offices, properties.to_vec(), Some("<http://static/>".to_string()));
 
-//         let rules ="@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-// @prefix : <http://cascading.reasoning.io/edge/>.
-// @prefix sosa: <http://www.w3.org/ns/sosa/>.
-// {?x a :LoudnessObservation} => {?x a :ComfortObservation}.
-// {?x a sosa:Observation. ?x sosa:madeBySensor ?s. ?s a :LoudnessSensor.} => {?x a :LoudnessObservation.}.
-// {?s a sosa:Sensor. ?s sosa:observes ?p. ?p a :Loudness.} => {?s a :LoudnessSensor.}.
-// {?x a sosa:Observation. ?x sosa:madeBySensor ?s. ?s a :TempSensor.} => {?x a :TempObservation.}.
-// {?s a sosa:Sensor. ?s sosa:observes ?p. ?p a :Temperature.} => {?s a :TempSensor.}.
-// {?x a :TempObservation} => {?x a :ComfortObservation}.
-// ";
         let rules ="@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
 @prefix : <http://cascading.reasoning.io/edge/>.
 @prefix sosa: <http://www.w3.org/ns/sosa/>.
@@ -426,7 +420,53 @@ _:b0 <http://www.w3.org/ns/sosa/observedProperty> _:b3 <http://stream/>.
         let mut new_rules = Vec::new();
         let  bindings = rewrite_rules(&store.triple_index, &store.rules_index, &backward_head,  None, &mut new_rules);
         println!("new_rules {:?}",TripleStore::decode_rules(&new_rules));
+        let expected = "{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_2_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/MyObservation>.\n}.\n{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_3_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/MyObservation>.\n}.\n";
+        assert_eq!(expected, TripleStore::decode_rules(&new_rules));
 
+    }
+    #[test]
+    fn test_rewrite_with_reasoning_hierarchy_with_rules(){
+        // generate static data
+        let num_offices: usize = 1;
+        let properties = ["CO2", "Humidity", "Loudness", "Temperature"];
+
+        let static_triples = generate_building(num_offices, properties.to_vec(), Some("<http://static/>".to_string()));
+
+        let rules ="@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix : <http://cascading.reasoning.io/edge/>.
+@prefix sosa: <http://www.w3.org/ns/sosa/>.
+{?x a :LoudnessObservation} => {?x a :ComfortObservation}.
+{?x a sosa:Observation. ?x sosa:madeBySensor ?s. ?s a :LoudnessSensor.} => {?x a :LoudnessObservation.}.
+{?s a sosa:Sensor. ?s sosa:observes ?p. ?p a :Loudness.} => {?s a :LoudnessSensor.}.
+{?x a sosa:Observation. ?x sosa:madeBySensor ?s. ?s a :TempSensor.} => {?x a :TempObservation.}.
+{?s a sosa:Sensor. ?s sosa:observes ?p. ?p a :Temperature.} => {?s a :TempSensor.}.
+{?x a :TempObservation} => {?x a :ComfortObservation}.
+";
+
+
+
+
+        // define event shape
+        let event = "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.some.com/Observation> <http://stream/>.
+_:b0 <http://www.w3.org/ns/sosa/madeBySensor> _:b1 <http://stream/>.
+_:b0 <http://www.w3.org/ns/sosa/hasSimpleResult> _:b2 <http://stream/>.
+_:b0 <http://www.w3.org/ns/sosa/observedProperty> _:b3 <http://stream/>.
+";
+
+        let mut store = TripleStore::new();
+        static_triples.into_iter().for_each(|t|store.add(t));
+        store.load_rules(rules);
+
+        //load the event shape
+        store.load_triples(event,Syntax::NQuads);
+
+        let backward_head = Triple::from("?x".to_string(),"<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>".to_string(),"<http://cascading.reasoning.io/edge/ComfortObservation>".to_string());
+
+        let mut new_rules = Vec::new();
+        let  bindings = rewrite_rules(&store.triple_index, &store.rules_index, &backward_head,  None, &mut new_rules);
+        println!("new_rules {:?}",TripleStore::decode_rules(&new_rules));
+        let expected = "{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_2_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/LoudnessObservation>.\n}.\n{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/LoudnessObservation>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_3_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/TempObservation>.\n}.\n{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/TempObservation>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n";
+        assert_eq!(expected, TripleStore::decode_rules(&new_rules));
 
     }
 }
