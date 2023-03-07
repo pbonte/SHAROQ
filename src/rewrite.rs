@@ -9,8 +9,10 @@ use std::fs;
 use std::rc::Rc;
 use roxi::backwardchaining::BackwardChainer;
 use roxi::bindings::Binding;
+use roxi::csprite::CSprite;
 use roxi::encoding::Encoder;
 use roxi::parser::{Parser, Syntax};
+use roxi::queryengine::{BlankNodeQueryEngine, QueryEngine, SimpleQueryEngine};
 use roxi::reasoner::Reasoner;
 use roxi::ruleindex::RuleIndex;
 use roxi::sparql::{eval_query, PlanNode};
@@ -195,6 +197,51 @@ fn rewrite_body(sub_rule: &[Triple], rule_bindings: &mut Binding) -> (HashMap<us
 
     (bindings_mapping,rewrite_body)
 }
+fn match_pattern_element(varOrTerm: &VarOrTerm, val: &usize) -> bool{
+    match varOrTerm {
+        VarOrTerm::Var(var) => true,
+        VarOrTerm::Term(term)=> {
+            if Binding::is_blank_node(val) {
+                true
+            }else {
+                term.iri.eq(val)
+            }
+        }
+    }
+}
+fn prune_csprite_rules(triple_index: &TripleIndex, rules: &Vec<Rule>) -> Vec<Rule>{
+    let mut pruned_rules = Vec::new();
+    // get all event triples:
+    let mut eventQuery = Triple::from("?s".to_string(),"?p".to_string(),"?o".to_string());
+    eventQuery.g = Some(VarOrTerm::new_term(SourceType::Stream.as_str().to_string()));
+
+    if let Some(bindinds) = triple_index.query(&eventQuery,None){
+        let s_bindings = bindinds.get(&Encoder::add("s".to_string())).unwrap();
+        let p_bindings = bindinds.get(&Encoder::add("p".to_string())).unwrap();
+        let o_bindings = bindinds.get(&Encoder::add("o".to_string())).unwrap();
+        for rule in rules {
+            //enforce rules that match only the streaming part of the data
+            let mut event_rule = false;
+            for triple_pattern in rule.body.clone() {
+                for counter in 0..bindinds.len(){
+                    //we take special notice for blank nodes in the event shape, such that they dont require a exact match
+                    if (match_pattern_element(&triple_pattern.s,s_bindings.get(counter).unwrap())
+                    && match_pattern_element(&triple_pattern.p,p_bindings.get(counter).unwrap())
+                        && match_pattern_element(&triple_pattern.o,o_bindings.get(counter).unwrap()))
+                    {
+                        event_rule = true;
+                        break;
+                    }
+                }
+            }
+            if event_rule{
+                pruned_rules.push(rule.clone());
+            }
+        }
+    }
+
+    pruned_rules
+}
 /// rewrites one specific rule
 fn rewrite_rule( sub_rule: Rc<Rule>, rule_bindings: &mut Binding) -> (HashMap<usize, bool>,Vec<Rule>) {
     let mut rewritten_rules = Vec::new();
@@ -241,7 +288,18 @@ fn extract_TP(triples: &mut Vec<Triple>, child: Box<PlanNode>) {
         _ => {}
     }
 }
+pub fn rewrite_rules_for_edge(triple_index: &TripleIndex, rule_index: &RuleIndex, rule_head: &Triple) -> Vec<Rule>{
+    let mut new_rules = Vec::new();
+    let  bindings = rewrite_rules(triple_index, rule_index, rule_head,  None, &mut new_rules);
 
+    //Prune rules
+    let mut csprite = CSprite::new();
+    csprite.add_rules(new_rules);
+    let pruned_rules = csprite.compute_sprite(rule_head);
+    let pruned_rules : Vec<Rule> = pruned_rules.into_iter().map(|r|Rc::try_unwrap(r).unwrap().clone()).collect();
+    let pruned_rules = prune_csprite_rules(triple_index,&pruned_rules);
+    pruned_rules
+}
 pub fn rewrite_for_edge(static_triples: Vec<Triple>, event: &str, query: &Query) -> Query {
     // convert query to triples
     let extracted_query = query_to_triples(&query);
@@ -275,6 +333,7 @@ fn remove_blink_nodes_from_binding(binding: &Binding) -> Binding {
 
 #[cfg(test)]
 mod test{
+    use roxi::csprite::CSprite;
     use roxi::parser::Parser;
     use spargebra::Query;
     use crate::generator::{generate_building, generate_observation};
@@ -444,8 +503,6 @@ _:b0 <http://www.w3.org/ns/sosa/observedProperty> _:b3 <http://stream/>.
 ";
 
 
-
-
         // define event shape
         let event = "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.some.com/Observation> <http://stream/>.
 _:b0 <http://www.w3.org/ns/sosa/madeBySensor> _:b1 <http://stream/>.
@@ -466,6 +523,58 @@ _:b0 <http://www.w3.org/ns/sosa/observedProperty> _:b3 <http://stream/>.
         let  bindings = rewrite_rules(&store.triple_index, &store.rules_index, &backward_head,  None, &mut new_rules);
         println!("new_rules {:?}",TripleStore::decode_rules(&new_rules));
         let expected = "{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_2_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/LoudnessObservation>.\n}.\n{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/LoudnessObservation>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_3_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/TempObservation>.\n}.\n{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/TempObservation>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n";
+        assert_eq!(expected, TripleStore::decode_rules(&new_rules));
+
+        //Prune rules
+        let mut csprite = CSprite::new();
+        csprite.add_rules(new_rules);
+        let pruned_rules = csprite.compute_sprite(&backward_head);
+        let pruned_rules : Vec<Rule> = pruned_rules.into_iter().map(|r|Rc::try_unwrap(r).unwrap().clone()).collect();
+        let pruned_rules = prune_csprite_rules(&store.triple_index,&pruned_rules);
+        println!("pruned {:?}",TripleStore::decode_rules(&pruned_rules));
+        let expected = "{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_2_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_3_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n";
+        assert_eq!(expected, TripleStore::decode_rules(&pruned_rules));
+
+    }
+    #[test]
+    fn test_rewrite_with_reasoning_hierarchy_with_pruning(){
+        // generate static data
+        let num_offices: usize = 1;
+        let properties = ["CO2", "Humidity", "Loudness", "Temperature"];
+
+        let static_triples = generate_building(num_offices, properties.to_vec(), Some("<http://static/>".to_string()));
+
+        let rules ="@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix : <http://cascading.reasoning.io/edge/>.
+@prefix sosa: <http://www.w3.org/ns/sosa/>.
+{?x a :LoudnessObservation} => {?x a :ComfortObservation}.
+{?x a sosa:Observation. ?x sosa:madeBySensor ?s. ?s a :LoudnessSensor.} => {?x a :LoudnessObservation.}.
+{?s a sosa:Sensor. ?s sosa:observes ?p. ?p a :Loudness.} => {?s a :LoudnessSensor.}.
+{?x a sosa:Observation. ?x sosa:madeBySensor ?s. ?s a :TempSensor.} => {?x a :TempObservation.}.
+{?s a sosa:Sensor. ?s sosa:observes ?p. ?p a :Temperature.} => {?s a :TempSensor.}.
+{?x a :TempObservation} => {?x a :ComfortObservation}.
+";
+
+
+        // define event shape
+        let event = "_:b0 <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.some.com/Observation> <http://stream/>.
+_:b0 <http://www.w3.org/ns/sosa/madeBySensor> _:b1 <http://stream/>.
+_:b0 <http://www.w3.org/ns/sosa/hasSimpleResult> _:b2 <http://stream/>.
+_:b0 <http://www.w3.org/ns/sosa/observedProperty> _:b3 <http://stream/>.
+";
+
+        let mut store = TripleStore::new();
+        static_triples.into_iter().for_each(|t|store.add(t));
+        store.load_rules(rules);
+
+        //load the event shape
+        store.load_triples(event,Syntax::NQuads);
+
+        let backward_head = Triple::from("?x".to_string(),"<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>".to_string(),"<http://cascading.reasoning.io/edge/ComfortObservation>".to_string());
+
+        let mut new_rules = rewrite_rules_for_edge(&store.triple_index, &store.rules_index, &backward_head);
+
+        let expected = "{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_2_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n{?x <http://www.w3.org/ns/sosa/madeBySensor> <http://cascading.reasoning.io/edge/sensor_3_office0>.\n}=>{?x <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://cascading.reasoning.io/edge/ComfortObservation>.\n}.\n";
         assert_eq!(expected, TripleStore::decode_rules(&new_rules));
 
     }

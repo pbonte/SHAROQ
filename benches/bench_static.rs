@@ -22,8 +22,29 @@ static QUERY_STR: &str = "Select * WHERE { ?obs a <http://www.w3.org/ns/sosa/Obs
 
 
 
+fn create_data(num_offices: usize, num_observations: usize) -> TripleIndex {
+    let properties = ["CO2", "Humidity", "Loudness", "Temperature"];
 
-fn create_data(num_offices: usize) -> TripleIndex {
+    let static_triples = generate_building(num_offices, properties.to_vec());
+
+
+    let mut index = TripleIndex::new();
+    static_triples.into_iter().for_each(|t| index.add(t));
+    for obs_counter in 0..num_observations {
+        let observations = generate_observation(format!("obs{}", obs_counter).as_str(),
+                                                "0_office1",
+                                                "100",
+                                                None);
+        let observation_triples = Parser::parse_triples( & observations,
+                                                         Syntax::NQuads).unwrap();
+        observation_triples.into_iter().for_each( | t| index.add(t));
+    }
+
+
+    index
+}
+
+fn create_data_static_increase(num_offices: usize) -> TripleIndex {
     let properties = ["CO2", "Humidity", "Loudness", "Temperature"];
 
     let static_triples = generate_building(num_offices, properties.to_vec());
@@ -40,7 +61,7 @@ fn create_data(num_offices: usize) -> TripleIndex {
 
 fn test_static_offices_10(bench: &mut Bencher){
     let num_offices: usize = 10;
-    let index = create_data(num_offices);
+    let index = create_data_static_increase(num_offices);
     let query = Query::parse(QUERY_STR, None).unwrap();
 
     bench.iter(|| {
@@ -55,7 +76,7 @@ fn test_static_offices_10(bench: &mut Bencher){
 }
 fn test_static_offices_100(bench: &mut Bencher){
     let num_offices: usize = 100;
-    let index = create_data(num_offices);
+    let index = create_data_static_increase(num_offices);
     let query = Query::parse(QUERY_STR, None).unwrap();
 
     bench.iter(|| {
@@ -70,7 +91,7 @@ fn test_static_offices_100(bench: &mut Bencher){
 }
 fn test_static_offices_1000(bench: &mut Bencher){
     let num_offices: usize = 1000;
-    let index = create_data(num_offices);
+    let index = create_data_static_increase(num_offices);
     let query = Query::parse(QUERY_STR, None).unwrap();
 
     bench.iter(|| {
@@ -85,7 +106,7 @@ fn test_static_offices_1000(bench: &mut Bencher){
 }
 fn test_static_offices_10000(bench: &mut Bencher){
     let num_offices: usize = 10000;
-    let index = create_data(num_offices);
+    let index = create_data_static_increase(num_offices);
     let query = Query::parse(QUERY_STR, None).unwrap();
 
     bench.iter(|| {

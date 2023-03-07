@@ -1,0 +1,25 @@
+Static Data increase:
+Size: 10,                AVG: 29542.57
+Size: 100,               AVG: 62961.97
+Size: 1000,              AVG: 356002.97
+Size: 10000,             AVG: 3731153.17
+Sensor Data increase:
+Size: 10,                AVG: 184210.93
+Size: 100,               AVG: 1194867.33
+Size: 1000,              AVG: 10797487.40
+Size: 10000,             AVG: 149115595.93
+Edge evaluation with static data increase:
+Size: 10,                AVG: 5926.73
+Size: 100,               AVG: 14394.87
+Size: 1000,              AVG: 5694.13
+Size: 10000,             AVG: 6803.13
+Hierarchy increase:
+Size: 10,                AVG: 101186.07
+Size: 100,               AVG: 524376.60
+Size: 1000,              AVG: 2382684.47
+Size: 10000,             AVG: 25667579.53
+REasoning edge:
+Size: 10,                AVG: 2955.20
+Size: 100,               AVG: 2800.47
+Size: 1000,              AVG: 2648.07
+

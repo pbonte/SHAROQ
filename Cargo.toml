@@ -17,6 +17,7 @@ log = { version = "0.4"}
 spargebra = "0.2.2"
 bencher = "0.1.5"
 
+
 [[bench]]
 name = "bench_static"
 harness = false
